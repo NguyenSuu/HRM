@@ -1,0 +1,41 @@
+<nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+        [nzTrigger]="null">
+        <div class="sidebar-logo">
+            <a href="/" target="_blank">
+                <!-- <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo"> -->
+                <img src="https://cdn.itviec.com/employers/brycen-vietnam/logo/social/QYZWsYfi4dCc9qd1FDaQhqUm/brycen-vietnam-logo.png" alt="logo">
+                <h1>Brycen Viet Nam</h1>
+            </a>
+        </div>
+        <!-- Danh sách router -->
+        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+            <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: routerList }"></ng-container>
+            <ng-template #menuTpl let-menus>
+                <ng-container *ngFor="let router of routerList">
+                    <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? router.title : ''" routerLinkActive="active">
+                        <a [routerLink]="[router.path]" >
+                            <i nz-icon [nzType]="router.icon"></i>
+                            <span>{{router.title}}</span>
+                        </a>
+                    </li>
+                </ng-container>
+            </ng-template>
+
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header">
+                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+                </span>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+    </nz-layout>
+</nz-layout>
