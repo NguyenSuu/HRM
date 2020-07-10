@@ -1,1 +1,38 @@
-<p>employees works!</p>
+<nz-collapse [nzBordered]="false">
+    <nz-collapse-panel #p *ngFor="let panel of panels; let isFirst = first" [nzHeader]="panel.name"
+        [nzActive]="panel.active" [ngStyle]="panel.customStyle"
+        [nzExpandedIcon]="!isFirst ? panel.icon || expandedIcon : undefined">
+        <p>{{ panel.name }}</p>
+        <ng-template #expandedIcon let-active>
+            {{ active }}
+        </ng-template>
+    </nz-collapse-panel>
+</nz-collapse>
+
+<nz-table #basicTable [nzData]="listOfData">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Skype</th>
+            <th>Phone</th>
+            <th>Experience</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.code }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.skype }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.experience }}</td>
+            <td>
+                <a><i nz-icon [nzType]="'edit'"></i></a>
+               
+                <nz-divider nzType="vertical"></nz-divider>
+                <a><i nz-icon [nzType]="'delete'"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

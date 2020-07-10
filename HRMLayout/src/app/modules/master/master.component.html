@@ -1,1 +1,61 @@
-<p>master works!</p>
+<div nz-row [nzGutter]="8">
+  <div nz-col>
+    <nz-card [nzBordered]="true" nzTitle="Level Project">
+      <button nz-button (click)="showModal()"><span>Add</span></button>
+      <nz-table #basicTable [nzData]="LevelDataProject" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data;index as index">
+            <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
+              <td>{{ index+1 }}</td>
+              <td>{{ data.name }}</td>
+              <td>
+                <a (click)="startEdit(data.id)"><i nz-icon [nzType]="'edit'"></i></a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)"><i nz-icon
+                    [nzType]="'delete'"></i></a>
+              </td>
+            </ng-container>
+            <ng-template #editTemplate>
+              <td>{{editCache[data.id].data.id}}</td>
+              <td><input nz-input [(ngModel)]="editCache[data.id].data.name" /></td>
+              <td>
+                <a (click)="saveEdit(data.id)" class="save">Save</a>
+                <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)">Cancel</a>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [formGroup]="validateForm">
+    <nz-form-item *ngFor="let control of listOfControl; let i = index">
+      <nz-form-label [nzXs]="24" [nzSm]="4" *ngIf="i == 0" [nzFor]="control.name">Name </nz-form-label>
+      <nz-form-control [nzXs]="24" [nzSm]="20" [nzOffset]="i == 0 ? 0 : 4"
+        nzErrorTip="Please input passenger's name or delete this field.">
+        <input class="passenger-input" 
+          nz-input placeholder="placeholder" 
+          [attr.id]="control.id"
+          [formControlName]="control.name" />
+        <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+        <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+          <i nz-icon nzType="plus"></i>
+          Add field
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
