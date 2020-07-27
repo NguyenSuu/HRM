@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsComponent } from './projects.component';
 import { Routes, RouterModule } from '@angular/router';
-import { NzCollapseModule, NzTableModule, NzCheckboxModule, NzIconModule, NzDividerModule, NzInputModule, NzSelectModule, NzButtonModule } from 'ng-zorro-antd';
+import { NzCollapseModule, NzTableModule, NzCheckboxModule, NzIconModule, NzDividerModule, NzInputModule, NzSelectModule, NzButtonModule, NzModalModule, NzStepsModule, NzFormModule, NzPopconfirmModule } from 'ng-zorro-antd';
 import { IconsProviderModule } from 'src/app/icons-provider.module';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const ROUTES:Routes=[
   {
     path:'',
@@ -29,8 +30,12 @@ const ROUTES:Routes=[
     NzSelectModule,
     NzDatePickerModule,
     NzButtonModule,
-    NzCheckboxModule,
-    NzSelectModule
+    FormsModule ,
+    NzModalModule,
+    NzStepsModule,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzPopconfirmModule
   ]
 })
 export class ProjectsModule { }

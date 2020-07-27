@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutesInfo, ROUTESINFO } from '../constant';
+import { RoutesInfo, ROUTESINFO, ROUTESMASTER } from '../constant';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,11 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
   routerList:RoutesInfo[]= ROUTESINFO;
+  routerMaster:RoutesInfo[]= ROUTESMASTER;
   isCollapsed = false;
-  constructor(private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute,private authService:AuthService) { }
 
   ngOnInit() {
     console.log(this.route.snapshot.queryParams)
+  }
+  signOut(){
+    this.authService.signOut();
   }
 
 }

@@ -1,0 +1,33 @@
+<div nz-row class="bread">
+    <div>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                <a [routerLink]="['../../projects']">Projects</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                {{project.name}}
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div class="setting">
+        <i nz-icon [nzType]="'setting'" [nzTheme]="'fill'"></i>
+        <nz-select [(ngModel)]="setting" (ngModelChange)="change()">
+            <nz-option nzValue="view" nzLabel="View" nz></nz-option>
+            <nz-option nzValue="edit" nzLabel="Edit"></nz-option>
+        </nz-select>
+    </div>
+</div>
+<div nz-row>
+    <nz-tabset>
+        <nz-tab nzTitle="Over view">
+            <ng-template nz-tab>
+                <app-over-view [setting]="setting"></app-over-view>
+            </ng-template>
+        </nz-tab>
+        <nz-tab nzTitle="Member">
+            <ng-template nz-tab>
+                <app-member [setting]="setting"></app-member>
+            </ng-template>
+        </nz-tab>
+    </nz-tabset>
+</div>

@@ -1,0 +1,86 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <!-- <ng-container formGroupName="project"> -->
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="code">Code project</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <input nz-input formControlName="code" id="code" />
+                    <!-- <p *ngIf="errors?.code?.required">Không được để trống</p> -->
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="name">Name project</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <input nz-input formControlName="name" id="name" />
+                    <!-- <p *ngIf="errors?.name?.required">Không được để trống</p> -->
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Level
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <nz-select formControlName="level">
+                        <nz-option *ngFor="let level of levelService.levelProjects$ |async" [nzValue]="level"
+                            [nzLabel]="level.name"></nz-option>
+                    </nz-select>
+                    <!-- <p *ngIf="errors?.level?.required">Không được để trống</p> -->
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Status
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <nz-select formControlName="status">
+                        <nz-option *ngFor="let status of statusService.statusProjects$ |async" [nzValue]="status"
+                            [nzLabel]="status.name"></nz-option>
+                    </nz-select>
+                    <!-- <p *ngIf="errors?.status?.required">Không được để trống</p> -->
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <!-- <div nz-row>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Expected start date
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-date-picker (ngModelChange)="onChange($event)" formControlName="expected_start_date">
+                </nz-date-picker>
+                <p *ngIf="errors?.startDate?.required">Không được để trống</p>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-row>
+        <nz-form-item>
+            <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Expected end date
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-date-picker (ngModelChange)="onChange($event)" formControlName="expected_end_date">
+                </nz-date-picker>
+                <p *ngIf="errors?.endDate?.required">Không được để trống</p>
+            </nz-form-control>
+        </nz-form-item>
+    </div> -->
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-label [nzSm]="10" [nzXs]="24">Notes
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <textarea nz-input formControlName="notes" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-row>
+            <nz-form-item>
+                <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+                    <button nz-button nzType="primary">Submit</button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    <!-- </ng-container> -->
+</form>

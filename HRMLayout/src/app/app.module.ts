@@ -14,6 +14,7 @@ import { WelcomeModule } from './pages/welcome/welcome.module';
 import { ApiInterceptor } from './@core/common/api.interceptor';
 import { CoreModule } from './@core/@core.module';
 import { CorsIntereptor } from './@core/common/crud.interceptor';
+import { AuthInterceptor } from './@core/common/auth.interceptor';
 
 registerLocaleData(en);
 
@@ -40,6 +41,9 @@ registerLocaleData(en);
     },
     {
       provide:HTTP_INTERCEPTORS,useClass:CorsIntereptor,multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true
     }
   ]
 })

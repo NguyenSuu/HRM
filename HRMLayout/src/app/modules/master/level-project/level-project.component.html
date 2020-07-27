@@ -1,0 +1,64 @@
+<button nz-button nzType="danger" (click)="showConfirm()"><span>Delete</span></button>
+<button nz-button [nzType]="'primary'" (click)="showModal()">Create</button>
+
+<nz-table #basicTable [nzData]="LevelDataProject" [nzFrontPagination]="false">
+  <thead>
+    <tr>
+      <th><label nz-checkbox [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="onAllChecked($event)"></label></th>
+      <th>STT</th>
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data;index as index">
+      <td>
+        <label nz-checkbox [nzChecked]="setOfCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onItemChecked(data.id, $event)"></label>
+      </td>
+      <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
+        <td>{{ index+1 }}</td>
+        <td>{{ data.name }}</td>
+        <td *ngIf="!editRecord">
+          <a (click)="startEdit(data.id)"><i nz-icon [nzType]="'edit'"></i></a>
+        </td>
+
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>{{ index+1 }}</td>
+        <td><input nz-input [(ngModel)]="editCache[data.id].data.name" /></td>
+        <td>
+          <a (click)="saveEdit(data.id)" class="save"><i nz-icon [nzType]="'save'"></i></a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)"><i nz-icon
+              [nzType]="'close-circle'"></i></a>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Level" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div [formGroup]="validateForm">
+    <div formArrayName="level" *ngFor="let alias of levelControl.controls; let i=index">
+      <form nz-form [formGroupName]="i">
+        <nz-form-label [nzXs]="24" [nzSm]="4" *ngIf="i == 0">Name </nz-form-label>
+
+        <nz-form-control [nzXs]="24" [nzSm]="20" [nzOffset]="i == 0 ? 0 : 4"
+          nzErrorTip="Please input passenger's name or delete this field.">
+          <input class="passenger-input" nz-input placeholder="placeholder" formControlName="name" />
+          <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(i)"></i>
+        </nz-form-control>
+      </form>
+    </div>
+  </div>
+  <div>
+    <div nz-col [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+      <button nz-button nzType="dashed" class="add-button" (click)="addLevel()">
+        <i nz-icon nzType="plus"></i>
+        Add field
+      </button>
+    </div>
+  </div>
+</nz-modal>

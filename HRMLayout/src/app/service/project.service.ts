@@ -16,8 +16,41 @@ export class ProjectService {
   constructor(private httpClient:HttpClient) { }
 
   getList(){
-    this.httpClient.get("project").subscribe(
+    this.httpClient.get("project/list").subscribe(
       (res:any) => this.projectsSubject.next(res)
     )
+  }
+  search(object:any){
+    this.httpClient.post("project/search",object).subscribe(
+      (res:any) =>{
+        this.projectsSubject.next(res)
+      }
+    )
+  }
+  findById(id:any){
+   return this.httpClient.get("project/find/"+id)
+  }
+  isDelete(id:number){
+    this.httpClient.delete("project/isDelete/"+id).subscribe(
+      (res:any) => {
+        const { value } = this.projectsSubject
+        const newList = value.filter(e => e.id != id)
+        this.projectsSubject.next(newList)
+      }
+    )
+  }
+  newProject(project:Project){
+   
+   return this.httpClient.post("project/new",project)
+    // .subscribe(
+    //   (res:any) =>{
+    //     const newList = [res,...this.projectsSubject.value]
+    //     this.projectsSubject.next(newList)
+    //   }
+    // )
+  }
+
+  update(project:Project){
+   return this.httpClient.put("project/update",project)
   }
 }

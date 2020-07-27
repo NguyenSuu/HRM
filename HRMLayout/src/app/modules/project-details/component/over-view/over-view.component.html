@@ -1,0 +1,183 @@
+<div nz-row>
+    <div nz-col nzSpan="12">
+        <nz-card style="height: 100vH;">
+            <ng-container *ngIf="setting=='view'">
+                <div nz-row>
+                    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="code">Code project</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <div>{{DataProject.code}}</div>
+                    </nz-form-control>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="name">Name project</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.name}}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="level">Level</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.level.name}}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24">Status</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.status.name}}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="Expected start date">Expected start date
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.plan.expected_start_date| date:'dd/MM/yyyy'}}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="Expected end date">Expected end date
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.plan.expected_end_date | date:'dd/MM/yyyy' }}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="Notes">Notes
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <div>{{DataProject.notes}}</div>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </ng-container>
+            <!-- Edit -->
+                <ng-container *ngIf="setting =='edit'">
+                    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired nzFor="code">Code project
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <input nz-input formControlName="code" id="code" [(ngModel)]="DataProject.code" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired >Name project
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <input nz-input formControlName="name" id="name" [(ngModel)]="DataProject.name" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24"  nzRequired>Level
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <nz-select formControlName="level" [(ngModel)]="DataProject.level.id">
+                                        <nz-option *ngFor="let level of levelService.levelProjects$ |async"
+                                            [nzValue]="level.id" [nzLabel]="level.name"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24"nzRequired>Status
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <nz-select formControlName="status" [(ngModel)]="DataProject.status.id">
+                                        <nz-option *ngFor="let status of statusService.statusProjects$ |async"
+                                            [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Expected start date
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <nz-date-picker (ngModelChange)="onChange($event)"
+                                        formControlName="expected_start_date"
+                                        [(ngModel)]="DataProject.plan.expected_start_date"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Expected end date
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <nz-date-picker (ngModelChange)="onChange($event)"
+                                        formControlName="expected_end_date"
+                                        [(ngModel)]="DataProject.plan.expected_end_date"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="10" [nzXs]="24" nzRequired>Notes
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                    <textarea nz-input formControlName="notes" [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+                                        [(ngModel)]="DataProject.notes"></textarea>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-row>
+                            <button nz-button nzType="primary" (click)="update()"><span>Update</span></button>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <button nz-button [nzType]="'nomal'" (click)="cancel()">Reset</button>
+                        </div>
+                    </form>
+                </ng-container>
+            </nz-card>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-card>
+            <ngx-charts-bar-vertical-2d [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient"
+                [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+                [legendTitle]="legendTitle" (select)="onSelect($event)" (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)">
+            </ngx-charts-bar-vertical-2d>
+        </nz-card>
+        <nz-card>
+            <nz-table #basicTable [nzData]="history">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Time</th>
+                        <th>Number Of Member </th>
+                        <th>Status Project</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{data.name}}</td>
+                        <td>{{data.age}}</td>
+                        <td>{{data.address}}</td>
+                        <td>
+                            <a>Action 一 {{data.name}}</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a>Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </nz-card>
+    </div>
+</div>

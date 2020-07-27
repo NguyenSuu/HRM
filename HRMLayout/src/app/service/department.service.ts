@@ -16,7 +16,7 @@ export class DepartmentService {
   constructor(private httpClient: HttpClient) { }
 
   getList(){
-    this.httpClient.get("department").subscribe(
+    this.httpClient.get("department/list").subscribe(
       (res:any) => this.departmentsSubject.next(res)
     )
   }

@@ -16,19 +16,13 @@ export class ApiInterceptor implements HttpInterceptor {
 
         const { url } = req;
 
-        
-
         req = req.clone(
-
             {
-
                 url: environment.host + url
-
             }
-
         );
 
-        console.log("url:",req)
+        console.log("url:", req)
 
         return next.handle(req);
 

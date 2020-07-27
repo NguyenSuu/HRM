@@ -1,0 +1,38 @@
+:host{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 6rem 12rem;
+
+    & >div {
+        width: 45%;
+    }
+}
+.login-text {
+    h1 {
+        font-size: 4rem;
+        font-weight: bold;
+        // color: #fff;
+    }
+
+    span.subtitle {
+        font-weight: bold;
+        // color: white;
+    }
+}
+.login-form {
+    max-width: 300px;
+  }
+
+  .login-form-margin {
+    margin-bottom: 16px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
